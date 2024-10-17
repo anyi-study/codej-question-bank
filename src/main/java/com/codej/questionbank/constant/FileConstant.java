@@ -3,7 +3,7 @@ package com.codej.questionbank.constant;
 /**
  * 文件常量
  *
- * @author 
+ * @author codej 
  * @from 
  */
 public interface FileConstant {

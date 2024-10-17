@@ -6,9 +6,7 @@ import com.codej.questionbank.model.entity.User;
 
 /**
  * 帖子点赞服务
- *
- * @author 
- * @from 
+
  */
 public interface PostThumbService extends IService<PostThumb> {
 

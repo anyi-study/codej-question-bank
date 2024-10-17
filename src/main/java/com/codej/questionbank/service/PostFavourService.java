@@ -10,9 +10,7 @@ import com.codej.questionbank.model.entity.User;
 
 /**
  * 帖子收藏服务
- *
- * @author 
- * @from 
+
  */
 public interface PostFavourService extends IService<PostFavour> {
 

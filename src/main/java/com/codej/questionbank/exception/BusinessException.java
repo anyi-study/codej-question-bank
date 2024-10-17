@@ -5,7 +5,7 @@ import com.codej.questionbank.common.ErrorCode;
 /**
  * 自定义异常类
  *
- * @author 
+ * @author codej 
  * @from 
  */
 public class BusinessException extends RuntimeException {

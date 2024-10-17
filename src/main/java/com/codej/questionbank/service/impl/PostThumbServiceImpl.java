@@ -17,9 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 帖子点赞服务实现
- *
- * @author 
- * @from 
+
  */
 @Service
 public class PostThumbServiceImpl extends ServiceImpl<PostThumbMapper, PostThumb>

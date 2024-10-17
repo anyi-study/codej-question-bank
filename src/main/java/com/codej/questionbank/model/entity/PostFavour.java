@@ -10,9 +10,7 @@ import lombok.Data;
 
 /**
  * 帖子收藏
- *
- * @author 
- * @from 
+
  **/
 @TableName(value = "post_favour")
 @Data

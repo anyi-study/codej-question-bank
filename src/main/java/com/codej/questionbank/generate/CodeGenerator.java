@@ -15,8 +15,8 @@ import java.io.Writer;
 /**
  * 代码生成器
  *
- * @author 
- * @from 
+ * @author codej 
+ * @from
  */
 public class CodeGenerator {
 
@@ -30,9 +30,9 @@ public class CodeGenerator {
     public static void main(String[] args) throws TemplateException, IOException {
         // 指定生成参数
         String packageName = "com.codej.questionbank";
-        String dataName = "用户评论";
-        String dataKey = "userComment";
-        String upperDataKey = "UserComment";
+        String dataName = "题库题目关联表";
+        String dataKey = "questionbankquestion";
+        String upperDataKey = "questionbankquestion";
 
         // 封装生成参数
         Map<String, Object> dataModel = new HashMap<>();

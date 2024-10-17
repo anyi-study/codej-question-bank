@@ -5,7 +5,7 @@ import com.codej.questionbank.common.ErrorCode;
 /**
  * 抛异常工具类
  *
- * @author 
+ * @author codej 
  * @from 
  */
 public class ThrowUtils {

@@ -3,7 +3,7 @@ package com.codej.questionbank.constant;
 /**
  * 通用常量
  *
- * @author 
+ * @author codej 
  * @from 
  */
 public interface CommonConstant {

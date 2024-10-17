@@ -3,7 +3,7 @@ package com.codej.questionbank.wxmp;
 /**
  * 微信公众号相关常量
  *
- * @author 
+ * @author codej 
  * @from 
  **/
 public class WxMpConstant {

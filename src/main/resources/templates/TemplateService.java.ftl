@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * ${dataName}服务
  *
- * @author
+ * @author codej
  * @from
  */
 public interface ${upperDataKey}Service extends IService<${upperDataKey}> {

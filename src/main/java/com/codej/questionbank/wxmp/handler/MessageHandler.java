@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 /**
  * 消息处理器
  *
- * @author 
+ * @author codej 
  * @from 
  **/
 @Component

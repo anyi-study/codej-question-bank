@@ -10,9 +10,7 @@ import lombok.Data;
 
 /**
  * 帖子点赞
- *
- * @author 
- * @from 
+
  */
 @TableName(value = "post_thumb")
 @Data

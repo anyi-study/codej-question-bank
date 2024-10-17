@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 帖子点赞接口
- *
- * @author 
- * @from 
+
  */
 @RestController
 @RequestMapping("/post_thumb")

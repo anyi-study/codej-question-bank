@@ -3,7 +3,7 @@ package com.codej.questionbank.common;
 /**
  * 自定义错误码
  *
- * @author 
+ * @author codej 
  * @from 
  */
 public enum ErrorCode {

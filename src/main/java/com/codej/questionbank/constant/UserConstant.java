@@ -3,7 +3,7 @@ package com.codej.questionbank.constant;
 /**
  * 用户常量
  *
- * @author 
+ * @author codej 
  * @from 
  */
 public interface UserConstant {
