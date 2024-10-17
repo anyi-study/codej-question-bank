@@ -8,8 +8,6 @@ import com.codej.questionbank.model.enums.UserRoleEnum;
 import com.codej.questionbank.service.UserService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -23,8 +21,9 @@ import javax.servlet.http.HttpServletRequest;
  * @author codej 
  * @from 
  */
-@Aspect
-@Component
+// todo 使用了sa-token鉴权，所以注释了这边的权限校验
+//@Aspect
+//@Component
 public class AuthInterceptor {
 
     @Resource
