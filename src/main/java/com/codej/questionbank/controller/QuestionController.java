@@ -1,15 +1,14 @@
 package com.codej.questionbank.controller;
 
 import cn.dev33.satoken.annotation.SaCheckRole;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.codej.questionbank.common.BaseResponse;
-import com.codej.questionbank.common.DeleteRequest;
-import com.codej.questionbank.common.ErrorCode;
-import com.codej.questionbank.common.ResultUtils;
+import com.codej.questionbank.common.*;
 import com.codej.questionbank.constant.UserConstant;
 import com.codej.questionbank.exception.BusinessException;
 import com.codej.questionbank.exception.ThrowUtils;
+import com.codej.questionbank.manager.CounterManager;
 import com.codej.questionbank.model.dto.question.*;
 import com.codej.questionbank.model.entity.Question;
 import com.codej.questionbank.model.entity.User;
@@ -22,7 +21,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import static com.codej.questionbank.constant.EmailConstant.*;
 
 /**
  * 题目接口
@@ -39,7 +43,53 @@ public class QuestionController {
     @Resource
     private UserService userService;
 
+    @Resource
+    private CounterManager counterManager;
+
+    @Resource
+    private AsyncEmailService asyncEmailService;
     // region 增删改查
+
+    /**
+     * 检测爬虫
+     *
+     */
+    private void crawlerDetect(User user,String remoteAddr) {
+        // 获取当前时间和用户IP地址
+        String loginTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        String ipAddress = remoteAddr;
+        // 调用多少次时告警
+        final int WARN_COUNT = 10;
+        // 超过多少次封号
+        final int BAN_COUNT = 20;
+        // 拼接访问 key
+        String key = String.format("user:access:%s", user.getId());
+        // 一分钟内访问次数，180 秒过期
+        long count = counterManager.incrAndGetCounter(key, 1, TimeUnit.MINUTES, 180);
+        // 是否封号
+        if (count > BAN_COUNT) {
+            // 踢下线
+            StpUtil.kickout(user.getId());
+            // 封号
+            User updateUser = new User();
+            updateUser.setId(user.getId());
+            updateUser.setUserRole("ban");
+            boolean b = userService.updateById(updateUser);
+            if (b){
+                //异步邮件
+                asyncEmailService.sendLoginNotification(BAN_TEMPLATE,BAN_SUBJECT,user.getUserAccount(), loginTime, ipAddress, user.getUserName(),SENDER);
+            }
+            throw new BusinessException(ErrorCode.NO_AUTH_ERROR, "访问太频繁，已被封号");
+        }
+        // 是否告警
+        if (count == WARN_COUNT) {
+            // 可以改为向管理员发送邮件通知
+            //异步邮件
+            asyncEmailService.sendLoginNotification(WARNING_TEMPLATE,WARNING_SUBJECT,user.getUserAccount(), loginTime, ipAddress, user.getUserName());
+            throw new BusinessException(110, "警告访问太频繁");
+        }
+    }
+
 
     /**
      * 批量删除题目
@@ -168,8 +218,12 @@ public class QuestionController {
      * @return
      */
     @GetMapping("/get/vo")
-    public BaseResponse<QuestionVO> getQuestionVOById(long id, HttpServletRequest request) {
+    public BaseResponse<QuestionVO> getQuestionVOById(long id,HttpServletRequest request) {
         ThrowUtils.throwIf(id <= 0, ErrorCode.PARAMS_ERROR);
+        // 检测和处置爬虫
+        User loginUser = userService.getLoginUser(request);
+        String remoteAddr = request.getRemoteAddr();
+        crawlerDetect(loginUser,remoteAddr);
         // 查询数据库
         Question question = questionService.getById(id);
         ThrowUtils.throwIf(question == null, ErrorCode.NOT_FOUND_ERROR);

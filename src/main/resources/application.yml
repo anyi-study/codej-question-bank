@@ -136,10 +136,15 @@ spring:
     uris: http://localhost:9200
     username: elastic
   mail:
-    host: smtp.163.com
+    host: smtp.qq.com
     port: 465
+<<<<<<< HEAD
+    username: codejteam@qq.com
+    password: ycblahnkhzlhbdhg
+=======
     username: jx523644@163.com
     password: XXX
+>>>>>>> 84b2ddc458db870390232948479771b0c64cd635
     protocol: smtp
     default-encoding: UTF-8
     properties:

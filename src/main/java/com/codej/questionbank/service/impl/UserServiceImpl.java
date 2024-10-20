@@ -38,6 +38,8 @@ import java.util.BitSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.codej.questionbank.constant.EmailConstant.BODY_TEMPLATE;
+import static com.codej.questionbank.constant.EmailConstant.LOGIN_SUBJECT;
 import static com.codej.questionbank.constant.UserConstant.USER_LOGIN_STATE;
 
 /**
@@ -188,7 +190,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 发送登录通知邮件
 //        emailService.sendLoginNotification(user.getUserAccount(), loginTime, ipAddress, user.getUserName());
 //异步邮件
-        asyncEmailService.sendLoginNotification(user.getUserAccount(), loginTime, ipAddress, user.getUserName());
+        asyncEmailService.sendLoginNotification(BODY_TEMPLATE,LOGIN_SUBJECT,user.getUserAccount(), loginTime, ipAddress, user.getUserName());
         return this.getLoginUserVO(user);
     }
 
